@@ -1,17 +1,14 @@
 import torch
 import numpy as np
 import time
-import torchvision
+from PIL import Image
+from torchvision import transforms, models
 
-model = torchvision.models.quantization.mobilenet.mobilenet_v2(pretrained=True, progress=True, quantize = False)
-#model = torch.hub.load('pytorch/vision:v0.6.0', 'mobilenet_v2', pretrained=True)
-#model.eval()
+model = models.quantization.mobilenet.mobilenet_v2(pretrained=True, progress=True, quantize = True)
 
 import urllib
 url, filename = ("https://github.com/pytorch/hub/raw/master/dog.jpg", "cat.png")
 
-from PIL import Image
-from torchvision import transforms
 input_image = Image.open(filename)
 preprocess = transforms.Compose([
     transforms.Resize(256),
@@ -39,7 +36,7 @@ for i in range(0,repeat):
     elapsed_ms = (time.time() - start_time) * 1000
     numpy_time[i] = elapsed_ms
 
-print("pytorch MobileNet v2 %-19s (%s)" % ("%.2f ms" % np.mean(numpy_time), "%.2f ms" % np.std(numpy_time)))
+print("pytorch MobileNet v2 quant %-19s (%s)" % ("%.2f ms" % np.mean(numpy_time), "%.2f ms" % np.std(numpy_time)))
 
 #_, index = torch.max(out, 1)
 #percentage = torch.nn.functional.softmax(out, dim=1)[0] * 100

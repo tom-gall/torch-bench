@@ -3,9 +3,8 @@ import numpy as np
 import time
 import torchvision
 
-model = torchvision.models.quantization.mobilenet.mobilenet_v2(pretrained=True, progress=True, quantize = False)
-#model = torch.hub.load('pytorch/vision:v0.6.0', 'mobilenet_v2', pretrained=True)
-#model.eval()
+model = torch.hub.load('pytorch/vision:v0.6.0', 'squeezenet1_1', pretrained=True)
+model.eval()
 
 import urllib
 url, filename = ("https://github.com/pytorch/hub/raw/master/dog.jpg", "cat.png")
@@ -39,7 +38,7 @@ for i in range(0,repeat):
     elapsed_ms = (time.time() - start_time) * 1000
     numpy_time[i] = elapsed_ms
 
-print("pytorch MobileNet v2 %-19s (%s)" % ("%.2f ms" % np.mean(numpy_time), "%.2f ms" % np.std(numpy_time)))
+print("pytorch Squeezenet v1.1  %-19s (%s)" % ("%.2f ms" % np.mean(numpy_time), "%.2f ms" % np.std(numpy_time)))
 
 #_, index = torch.max(out, 1)
 #percentage = torch.nn.functional.softmax(out, dim=1)[0] * 100
